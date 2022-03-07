@@ -31,7 +31,7 @@ def check_max_x():
 def check_step():
     while True:
         try:
-            step = float(input("Введите значение с каким шагом будет изменяться x: "))
+            step = float(input("Введите шаг изменения значения x: "))
             if step <= 0:
                 raise ValueError()
             return step
