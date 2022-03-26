@@ -24,28 +24,22 @@ class CarPark:
         stay = date_time2 - date_time1
         return stay
 
-    def price(self): #цена
-        null = datetime.timedelta(hours=0)
-        price = 0
-        while self.stay() > null:
-            null += datetime.timedelta(hours=1)
-            price += 100
-        return price
-
-    def discounted_price(self):#цена со скидкой
-        price = self.price()
-        discpr = round(price - (price*0.07))
-        return discpr
-
     def cost(self): #общая стоимость
+        null = datetime.timedelta(hours=0)
         discount_week = datetime.timedelta(days=7)
         s = self.stay()
-        s_hours = s.seconds / 3600
-        if s >= discount_week:
-            return ("Стоимость за {0} д. и {1} ч. составляет {2} руб.(применен тариф недельной аренды: скидка 7%)".format(
-                    s.days, round(s_hours), self.discounted_price()))
+        s_hours = round(s.seconds / 3600)
+        self.price = 0
+        while self.stay() > null:
+            null += datetime.timedelta(hours=1)
+            self.price += 100
+        if s < discount_week:
+            return("Стоимость за {0} д. и {1} ч. составляет {2} руб.".format(s.days, s_hours, self.price))
         else:
-            return("Стоимость за {0} д. и {1} ч. составляет {2} руб.".format(s.days, round(s_hours), self.price()))
+            self.discpr = round(self.price - (self.price * 0.07))
+            return ("Стоимость за {0} д. и {1} ч. составляет {2} руб.(применен тариф недельной аренды: скидка 7%)".format(
+                    s.days, s_hours, self.discpr))
+
 
     def debt(self, before): #задолжность
         print("\nДата отъезда:", before)
@@ -56,7 +50,7 @@ class CarPark:
         debt = date_time3 - date_time2
         debt_hours = debt.seconds / 3600
         if self.stay() >= week:
-            dp = self.discounted_price()
+            dp = self.discpr
             penalty = 0
             if debt > null:
                 while debt > null:
@@ -74,7 +68,7 @@ class CarPark:
                 return ("Задолженность: отсутствует\nИтого к оплате: {0} руб.".format(dp))
         else:
             penalty = 0
-            p = self.price()
+            p = self.price
             if debt > null:
                 while debt > null:
                     null = null + datetime.timedelta(hours=1)
