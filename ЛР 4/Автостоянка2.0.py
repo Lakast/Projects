@@ -11,8 +11,8 @@ class CarPark:
         self.color = input("Цвет ТС: ")
 
         print("\nВведите данные для учета времени")
-        self.date_of_entry = input("Дата въезда: ")
-        self. paid = input("Зарезервировано до: ")
+        self.date_of_entry = input("Время и дата въезда: ")
+        self. paid = input("Зарезервировано до (время и дата): ")
 
         print("\nВведите данные для закрытия чека")
         self.before = input("Дата отъезда: ")
@@ -43,7 +43,7 @@ class CarPark:
                     s.days, s_hours, self.discpr))
 
 
-    def debt(self): #задолжность
+    def debt(self): #задолженность
         date_time2 = datetime.datetime.strptime(self.paid, '%H:%M:%S %d.%m.%Y')
         date_time3 = datetime.datetime.strptime(self.before, '%H:%M:%S %d.%m.%Y')
         week = datetime.timedelta(days=7)
@@ -118,7 +118,7 @@ def print_table(data, cell_sep=' | ', header_separator=True):
 
 def main():
     vehicle1 = CarPark()
-    #"08:00:00 29.06.2022", "Игнатов Владимир Иванович", "TOYOTA Camry VII", "Легковой", "Н 005ЕМ-11", "Черный",
+    #"08:00:00 29.06.2022", "Игнатов Владимир Иванович", "Легковой", "TOYOTA Camry VII",  "Н 005ЕМ-11", "Черный",
     # "08:00:00 03.07.2022"
     print(vehicle1.check())
 
